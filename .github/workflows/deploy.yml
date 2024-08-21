@@ -21,11 +21,11 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Login Docker hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_ID }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+      # - name: Login Docker hub
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKER_ID }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
 
       # - name: Build and push Docker image
       #   run: |
