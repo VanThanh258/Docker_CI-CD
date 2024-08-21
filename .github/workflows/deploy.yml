@@ -33,6 +33,9 @@ jobs:
           docker tag ${{ secrets.DOCKER_IMAGE_NAME }} ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
           docker push ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
 
+      - name: List files in source directory
+        run: ls -la ./deploy1
+
       - name: Copy config and docker-compose to server
         uses: appleboy/scp-action@v0.1.7
         with:
