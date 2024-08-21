@@ -27,7 +27,7 @@ jobs:
       #     username: ${{ secrets.DOCKER_ID }}
       #     password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image1
         run: |
           docker build -t ${{ secrets.DOCKER_IMAGE_NAME }} .
           docker tag ${{ secrets.DOCKER_IMAGE_NAME }} ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
