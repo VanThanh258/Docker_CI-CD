@@ -42,14 +42,14 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          sourse: deploytest/*
+          sourse: "docker-compose.yml"
           target: "/root"
 
       - name: SSH into server and deploy
         uses: appleboy/ssh-action@v1.0.3
         env:
           DOCKER_ID: ${{ secrets.DOCKER_ID }}
-          DOCKER_COMPOSE_PATH: "/root/deploytest/docker-compose.yml"
+          DOCKER_COMPOSE_PATH: "/root/docker-compose.yml"
           DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_IMAGE_NAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         with:
