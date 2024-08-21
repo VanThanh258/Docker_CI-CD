@@ -42,7 +42,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "/deploytest/*"
+          source: "deploytest"
           target: "/root"
           rm: true
 
