@@ -39,7 +39,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          sourse: "deploy/*"
+          sourse: "deploy1/*"
           target: "/root"
           strip_components: 1
 
