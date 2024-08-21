@@ -36,7 +36,7 @@ jobs:
       - name: List files in source directory
         run: ls -la ./deploytest
 
-      - name: Create tar file
+      - name: Create tar filess
         run: tar -czvf /tmp/archive.tar.gz deploytest
 
       - name: Copy config and docker-compose to server
