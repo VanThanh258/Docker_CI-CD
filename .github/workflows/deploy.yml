@@ -61,7 +61,7 @@ jobs:
           script: |
             echo $DOCKER_COMPOSE_PATH
             echo $DOCKER_PASSWORD
-            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+            docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}
             docker pull ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
             docker compose -f $DOCKER_COMPOSE_PATH down
             docker compose -f $DOCKER_COMPOSE_PATH up -d
