@@ -33,8 +33,8 @@ jobs:
       #     docker tag ${{ secrets.DOCKER_IMAGE_NAME }} ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
       #     docker push ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
 
-      - name: List files in source directory
-        run: ls -la ./deploytest
+      # - name: List files in source directory
+      #   run: ls -la ./deploytest
 
       - name: Copy config and docker-compose to server
         uses: appleboy/scp-action@v0.1.7
@@ -42,26 +42,26 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          sourse: "docker-compose.yml"
+          sourse: "test.txt"
           target: "/root"
 
-      - name: SSH into server and deploy
-        uses: appleboy/ssh-action@v1.0.3
-        env:
-          DOCKER_ID: ${{ secrets.DOCKER_ID }}
-          DOCKER_COMPOSE_PATH: "/root/docker-compose.yml"
-          DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_IMAGE_NAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          envs: DOCKER_ID,DOCKER_IMAGE_NAME,DOCKER_COMPOSE_PATH
-          script_stop: true
-          script: |
-            echo $DOCKER_COMPOSE_PATH
-            echo $DOCKER_PASSWORD
-            docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}
-            docker pull ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
-            docker compose -f $DOCKER_COMPOSE_PATH down
-            docker compose -f $DOCKER_COMPOSE_PATH up -d
+      # - name: SSH into server and deploy
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   env:
+      #     DOCKER_ID: ${{ secrets.DOCKER_ID }}
+      #     DOCKER_COMPOSE_PATH: "/root/docker-compose.yml"
+      #     DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_IMAGE_NAME }}
+      #     DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      #   with:
+      #     host: ${{ secrets.SERVER_HOST }}
+      #     username: ${{ secrets.SERVER_USERNAME }}
+      #     key: ${{ secrets.SERVER_SSH_KEY }}
+      #     envs: DOCKER_ID,DOCKER_IMAGE_NAME,DOCKER_COMPOSE_PATH
+      #     script_stop: true
+      #     script: |
+      #       echo $DOCKER_COMPOSE_PATH
+      #       echo $DOCKER_PASSWORD
+      #       docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}
+      #       docker pull ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
+      #       docker compose -f $DOCKER_COMPOSE_PATH down
+      #       docker compose -f $DOCKER_COMPOSE_PATH up -d
