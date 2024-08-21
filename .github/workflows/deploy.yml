@@ -21,20 +21,20 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Login Docker hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_ID }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+      # - name: Login Docker hub
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKER_ID }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker image
-        run: |
-          docker build -t ${{ secrets.DOCKER_IMAGE_NAME }} .
-          docker tag ${{ secrets.DOCKER_IMAGE_NAME }} ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
-          docker push ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
+      # - name: Build and push Docker image
+      #   run: |
+      #     docker build -t ${{ secrets.DOCKER_IMAGE_NAME }} .
+      #     docker tag ${{ secrets.DOCKER_IMAGE_NAME }} ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
+      #     docker push ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
 
       - name: List files in source directory
-        run: ls -la ./deploy1
+        run: ls -la ./deploytest
 
       - name: Copy config and docker-compose to server
         uses: appleboy/scp-action@v0.1.7
@@ -42,15 +42,17 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          sourse: "./deploy1/*"
+          sourse: "/deploytest/*"
           target: "/root"
-          strip_components: 1
+          rm: true
+          overwrite: true
+          strip_components: 2
 
       - name: SSH into server and deploy
         uses: appleboy/ssh-action@v1.0.3
         env:
           DOCKER_ID: ${{ secrets.DOCKER_ID }}
-          DOCKER_COMPOSE_PATH: "/root/deploy1/docker-compose.yml"
+          DOCKER_COMPOSE_PATH: "/root/deploytest/docker-compose.yml"
           DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_IMAGE_NAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         with:
