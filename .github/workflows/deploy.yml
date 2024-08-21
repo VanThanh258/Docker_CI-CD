@@ -41,7 +41,6 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           sourse: "deploy/*"
           target: "/root"
-          overwrite: true
           strip_components: 1
 
       - name: SSH into server and deploy
