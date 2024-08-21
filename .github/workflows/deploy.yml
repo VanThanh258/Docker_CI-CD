@@ -1,0 +1,59 @@
+name: Deployment Test
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "*"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy-to-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_IMAGE_NAME }} .
+          docker build ${{ secrets.DOCKER_IMAGE_NAME }} ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
+          docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker push ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
+
+      - name: Copy config and docker-compose to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          sourse: "deploy/*"
+          target: "/root"
+
+      - name: SSH into server and deploy
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          DOCKER_ID: ${{ secrets.DOCKER_ID }}
+          DOCKER_COMPOSE_PATH: "/root/deploy/docker-compose.yml"
+          DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_IMAGE_NAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          envs: DOCKER_ID,DOCKER_IMAGE_NAME,DOCKER_COMPOSE_PATH,DATABASE_PASSWORD
+          script_stop: true
+          script: |
+            echo $DOCKER_COMPOSE_PATH
+            echo $DOCKER_PASSWORD
+            docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}
+            docker pull ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
+            docker compose -f $DOCKER_COMPOSE_PATH down
+            docker compose -f $DOCKER_COMPOSE_PATH up -d

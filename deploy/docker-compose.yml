@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  production:
+    image: thanh019/test-docker-deploy
+    container_name: production123
+    restart: unless-stopped
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
+      - /app/public
+    ports:
+      - "3011:3001"
+
+  productiontest:
+    image: thanh019/test-docker-deploy
+    container_name: prodctiontest345
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
+      - /app/public
+    ports:
+      - "3012:3002"
+    command: ["pm2-runtime", "ecosystem.config.js", "--env", "productiontest"]
