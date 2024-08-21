@@ -44,7 +44,6 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: "deploytest"
           target: "/root"
-          rm: true
 
       - name: SSH into server and deploy
         uses: appleboy/ssh-action@v1.0.3
