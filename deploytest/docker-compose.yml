@@ -6,7 +6,6 @@ services:
     container_name: production123
     restart: unless-stopped
     volumes:
-      - ./:/app
       - /app/node_modules
       - /app/.next
       - /app/public
@@ -17,7 +16,6 @@ services:
     image: thanh019/test-docker-deploy
     container_name: prodctiontest345
     volumes:
-      - ./:/app
       - /app/node_modules
       - /app/.next
       - /app/public
