@@ -42,8 +42,8 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          sourse: "test.txt"
-          target: "/root"
+          sourse: "/deploytest/*"
+          target: "/root/deploy"
 
       - name: SSH into server and deploy
         uses: appleboy/ssh-action@v1.0.3
