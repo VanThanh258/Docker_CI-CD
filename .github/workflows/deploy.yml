@@ -34,10 +34,7 @@ jobs:
       #     docker push ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
 
       - name: List files in source directory
-        run: ls -la ./deploytest
-
-      - name: Create tar filess
-        run: tar -czvf /tmp/archive.tar.gz deploytest
+        run: ls ./deploytest
 
       - name: Copy config and docker-compose to server
         uses: appleboy/scp-action@v0.1.7
@@ -45,8 +42,9 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: /tmp/archive.tar.gz
+          source: "/deploytest/*"
           target: "/root"
+          rm: true
 
       - name: SSH into server and deploy
         uses: appleboy/ssh-action@v1.0.3
