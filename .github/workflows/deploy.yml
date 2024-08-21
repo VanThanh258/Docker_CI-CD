@@ -25,6 +25,7 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_IMAGE_NAME }} .
           docker tag ${{ secrets.DOCKER_IMAGE_NAME }} ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
+          docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}
 
       - name: Copy config and docker-compose to server
