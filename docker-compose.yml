@@ -15,7 +15,7 @@ services:
 
   productiontest:
     image: thanh019/test-docker-deploy
-    container_name: prodctiontest345
+    container_name: productiontest345
     volumes:
       - ./:/app
       - /app/node_modules
