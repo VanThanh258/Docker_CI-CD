@@ -36,7 +36,7 @@ jobs:
       # - name: List files in source directory
       #   run: ls -la ./deploytest
 
-      - name: Copy config and docker-compose to server
+      - name: Copy config and docker-compose to server1
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_HOST }}
