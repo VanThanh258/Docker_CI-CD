@@ -38,7 +38,7 @@ export default function Home() {
           priority
         />
         <span>Productest nhé</span>
-        <span>Update mới</span>
+        <span>Update mới 123</span>
       </div>
 
       <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
