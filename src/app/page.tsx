@@ -37,8 +37,8 @@ export default function Home() {
           height={37}
           priority
         />
-        <span>Productest nhé</span>
-        <span>Update mới 123</span>
+        <p>Productest nhé</p>
+        <p>Update</p>
       </div>
 
       <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">

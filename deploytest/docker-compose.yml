@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   production:
-    image: thanh019/test-docker-deploy
+    image: mapstudy/test-docker-deploy
     container_name: production123
     restart: unless-stopped
     volumes:
@@ -14,7 +14,7 @@ services:
       - "3011:3001"
 
   productiontest:
-    image: thanh019/test-docker-deploy
+    image: mapstudy/test-docker-deploy
     container_name: prodctiontest345
     volumes:
       - ./:/app
